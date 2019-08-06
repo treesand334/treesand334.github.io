@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="单片机 51单片机的最小系统由：复位电路，电源电路，振荡电路，外围设备和单片机主板组成。51单片机的外部引脚有P1 P2 P3 P0；P0是双向IO引脚，需要带有上拉电阻。P1是普通双向引脚P2功能和P0一样P3具有第二功能：P3.0是串口输入引脚P3.1是串口输出引脚P3.2是外部中断0的输入引脚P3.3是外部中断1的输入引脚P3.4是T0，即定时计数器0的输入引脚P3.5是T1，即定时计数器1">
-<meta name="keywords" content="单片机">
+  <meta name="description" content="当我们调用拷贝构造函数时，系统会给我们进行的是浅拷贝；1m_high=p.m_high 浅拷贝带来的问题就是：堆区内存的重复释放而深拷贝可以重新分配内存资源；1m_high=new int(*p.m_high);//深拷贝 析构函数将堆区开辟的数据进行释放；代码如下：1234567891011~Person()&amp;#123;if(m_high!=Null)&amp;#123;delete m_high;m_">
+<meta name="keywords" content="C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="51单片机">
-<meta property="og:url" content="http://trees.tech/2019/06/11/单片机/index.html">
+<meta property="og:title" content="深拷贝和浅拷贝">
+<meta property="og:url" content="http://trees.tech/2019/06/11/C/index.html">
 <meta property="og:site_name" content="together之博客">
-<meta property="og:description" content="单片机 51单片机的最小系统由：复位电路，电源电路，振荡电路，外围设备和单片机主板组成。51单片机的外部引脚有P1 P2 P3 P0；P0是双向IO引脚，需要带有上拉电阻。P1是普通双向引脚P2功能和P0一样P3具有第二功能：P3.0是串口输入引脚P3.1是串口输出引脚P3.2是外部中断0的输入引脚P3.3是外部中断1的输入引脚P3.4是T0，即定时计数器0的输入引脚P3.5是T1，即定时计数器1">
+<meta property="og:description" content="当我们调用拷贝构造函数时，系统会给我们进行的是浅拷贝；1m_high=p.m_high 浅拷贝带来的问题就是：堆区内存的重复释放而深拷贝可以重新分配内存资源；1m_high=new int(*p.m_high);//深拷贝 析构函数将堆区开辟的数据进行释放；代码如下：1234567891011~Person()&amp;#123;if(m_high!=Null)&amp;#123;delete m_high;m_">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-02T17:39:19.032Z">
+<meta property="og:updated_time" content="2019-08-06T14:41:36.180Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="51单片机">
-<meta name="twitter:description" content="单片机 51单片机的最小系统由：复位电路，电源电路，振荡电路，外围设备和单片机主板组成。51单片机的外部引脚有P1 P2 P3 P0；P0是双向IO引脚，需要带有上拉电阻。P1是普通双向引脚P2功能和P0一样P3具有第二功能：P3.0是串口输入引脚P3.1是串口输出引脚P3.2是外部中断0的输入引脚P3.3是外部中断1的输入引脚P3.4是T0，即定时计数器0的输入引脚P3.5是T1，即定时计数器1">
+<meta name="twitter:title" content="深拷贝和浅拷贝">
+<meta name="twitter:description" content="当我们调用拷贝构造函数时，系统会给我们进行的是浅拷贝；1m_high=p.m_high 浅拷贝带来的问题就是：堆区内存的重复释放而深拷贝可以重新分配内存资源；1m_high=new int(*p.m_high);//深拷贝 析构函数将堆区开辟的数据进行释放；代码如下：1234567891011~Person()&amp;#123;if(m_high!=Null)&amp;#123;delete m_high;m_">
 
 
 
@@ -115,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="http://trees.tech/2019/06/11/单片机/">
+  <link rel="canonical" href="http://trees.tech/2019/06/11/C/">
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>51单片机 | together之博客</title>
+  <title>深拷贝和浅拷贝 | together之博客</title>
   
 
 
@@ -355,7 +355,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://trees.tech/2019/06/11/单片机/">
+    <link itemprop="mainEntityOfPage" href="http://trees.tech/2019/06/11/C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="黄震航">
@@ -372,7 +372,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">51单片机
+          <h1 class="post-title" itemprop="name headline">深拷贝和浅拷贝
 
               
             
@@ -415,7 +415,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-03 01:39:19" itemprop="dateModified" datetime="2019-08-03T01:39:19+08:00">2019-08-03</time>
+                <time title="修改时间：2019-08-06 22:41:36" itemprop="dateModified" datetime="2019-08-06T22:41:36+08:00">2019-08-06</time>
               
             
           </span>
@@ -432,7 +432,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/单片机/" itemprop="url" rel="index"><span itemprop="name">单片机</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a></span>
 
                 
                 
@@ -467,8 +467,10 @@
       
 
       
-        <p>单片机</p>
-<p>51单片机的最小系统由：复位电路，电源电路，振荡电路，外围设备和单片机主板组成。51单片机的外部引脚有P1 P2 P3 P0；<br>P0是双向IO引脚，需要带有上拉电阻。<br>P1是普通双向引脚<br>P2功能和P0一样<br>P3具有第二功能：<br>P3.0是串口输入引脚<br>P3.1是串口输出引脚<br>P3.2是外部中断0的输入引脚<br>P3.3是外部中断1的输入引脚<br>P3.4是T0，即定时计数器0的输入引脚<br>P3.5是T1，即定时计数器1的输入引脚<br>P3.6是WR，即写数据的输入引脚<br>P3.7是RD，即读数据的输入引脚</p>
+        <p>当我们调用拷贝构造函数时，系统会给我们进行的是浅拷贝；<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">m_high</span>=p.m_high</span><br></pre></td></tr></table></figure></p>
+<p>浅拷贝带来的问题就是：<br>堆区内存的重复释放<br>而深拷贝可以重新分配内存资源；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m_high=<span class="keyword">new</span> <span class="keyword">int</span>(*p.m_high);<span class="comment">//深拷贝</span></span><br></pre></td></tr></table></figure></p>
+<p>析构函数将堆区开辟的数据进行释放；代码如下：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">~Person()</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span>(m_high!=<span class="literal">Null</span>)</span><br><span class="line">&#123;</span><br><span class="line">delete m_high;</span><br><span class="line"><span class="attribute">m_high</span>=<span class="literal">Null</span>;</span><br><span class="line">&#125;</span><br><span class="line">cout&lt;&lt;<span class="string">"Person的析构函数"</span>&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>完整代码和说明如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">	 Person(<span class="built_in">string</span> name,<span class="keyword">int</span> high)</span><br><span class="line">	 &#123;</span><br><span class="line">		  <span class="built_in">cout</span>&lt;&lt;<span class="string">"有参函数"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	 m_name=name;</span><br><span class="line">	 m_high=<span class="keyword">new</span> <span class="keyword">int</span>(high);</span><br><span class="line"></span><br><span class="line">	 &#125;</span><br><span class="line">	 Person(<span class="keyword">const</span> Person &amp;p)</span><br><span class="line">	 &#123;</span><br><span class="line">	 m_name=p.m_name;</span><br><span class="line">	 <span class="comment">//m_high=p.m_high 浅拷贝</span></span><br><span class="line">	 m_high=<span class="keyword">new</span> <span class="keyword">int</span>(*p.m_high);<span class="comment">//深拷贝</span></span><br><span class="line">	 &#125;</span><br><span class="line">	 ~Person()<span class="comment">//析构函数可以释放堆区的数据</span></span><br><span class="line">    &#123;</span><br><span class="line">       <span class="keyword">if</span>(m_high!=<span class="literal">NULL</span>)<span class="comment">//析构函数将堆区开辟的数据进行释放</span></span><br><span class="line">          &#123;</span><br><span class="line">             <span class="keyword">delete</span> m_high;</span><br><span class="line">                m_high=<span class="literal">NULL</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;<span class="string">"Person的析构函数"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">	 <span class="built_in">string</span> m_name;</span><br><span class="line">	 <span class="keyword">int</span> *m_high;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="function">Person <span class="title">p1</span><span class="params">(<span class="string">"张三"</span>,<span class="number">160</span>)</span></span>;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;<span class="string">"p1的姓名为 ："</span>&lt;&lt;p1.m_name&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;<span class="string">"p1的身高为 ："</span>&lt;&lt;*p1.m_high&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"><span class="function">Person <span class="title">p2</span><span class="params">(p1)</span></span>;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;<span class="string">"p2的姓名为 ："</span>&lt;&lt;p2.m_name&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;<span class="string">"p2的身高为 ："</span>&lt;&lt;*p2.m_high&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	test();</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -495,7 +497,7 @@
         
         <div class="post-tags">
           
-            <a href="/tags/单片机/" rel="tag"># 单片机</a>
+            <a href="/tags/C/" rel="tag"># C++</a>
           
         </div>
       
@@ -508,8 +510,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/11/猜数字/" rel="next" title="猜数字">
-                <i class="fa fa-chevron-left"></i> 猜数字
+              <a href="/2019/06/11/单片机/" rel="next" title="51单片机">
+                <i class="fa fa-chevron-left"></i> 51单片机
               </a>
             
           </div>
@@ -518,8 +520,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/11/C/" rel="prev" title="深拷贝和浅拷贝">
-                深拷贝和浅拷贝 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/08/04/stm32/" rel="prev" title="stm32基础">
+                stm32基础 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
