@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="我们经常能看到这些题：1.12const int *p1和int * const p2另外，注意一下 const int *p等同与 int const *p 那么他们的区别在哪呢？const int 是一个常量指针，他的指向方向可以修改，但是值不可以int 指针 const是一个指针常量，他的值可以修改，但是指向方向不可以看看如下代码和分析1234567891011121314int a,b;">
-<meta name="keywords" content="C++">
+  <meta name="description" content="stm32串行通信有2中：分别是同步通信（SPI,I2C）异步通信（USART）；他们都是全双工通信。串口设置的一般步骤可以总结为如下几个步骤：1) 串口时钟使能，GPIO 时钟使能2) 串口复位3) GPIO 端口模式设置4) 串口参数初始化5) 开启中断并且初始化 NVIC（如果需要开启中断才需要这个步骤）6) 使能串口7) 编写中断处理函数中断服务函数需要说一下怎么写：STM32的发送和接收">
+<meta name="keywords" content="stm32">
 <meta property="og:type" content="article">
-<meta property="og:title" content="指针和指针数组">
-<meta property="og:url" content="http://trees.tech/2019/08/07/指针/index.html">
+<meta property="og:title" content="USART通信">
+<meta property="og:url" content="http://trees.tech/2019/09/22/USART通信/index.html">
 <meta property="og:site_name" content="together之博客">
-<meta property="og:description" content="我们经常能看到这些题：1.12const int *p1和int * const p2另外，注意一下 const int *p等同与 int const *p 那么他们的区别在哪呢？const int 是一个常量指针，他的指向方向可以修改，但是值不可以int 指针 const是一个指针常量，他的值可以修改，但是指向方向不可以看看如下代码和分析1234567891011121314int a,b;">
+<meta property="og:description" content="stm32串行通信有2中：分别是同步通信（SPI,I2C）异步通信（USART）；他们都是全双工通信。串口设置的一般步骤可以总结为如下几个步骤：1) 串口时钟使能，GPIO 时钟使能2) 串口复位3) GPIO 端口模式设置4) 串口参数初始化5) 开启中断并且初始化 NVIC（如果需要开启中断才需要这个步骤）6) 使能串口7) 编写中断处理函数中断服务函数需要说一下怎么写：STM32的发送和接收">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-17T18:37:56.040Z">
+<meta property="og:updated_time" content="2019-09-23T07:47:50.124Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="指针和指针数组">
-<meta name="twitter:description" content="我们经常能看到这些题：1.12const int *p1和int * const p2另外，注意一下 const int *p等同与 int const *p 那么他们的区别在哪呢？const int 是一个常量指针，他的指向方向可以修改，但是值不可以int 指针 const是一个指针常量，他的值可以修改，但是指向方向不可以看看如下代码和分析1234567891011121314int a,b;">
+<meta name="twitter:title" content="USART通信">
+<meta name="twitter:description" content="stm32串行通信有2中：分别是同步通信（SPI,I2C）异步通信（USART）；他们都是全双工通信。串口设置的一般步骤可以总结为如下几个步骤：1) 串口时钟使能，GPIO 时钟使能2) 串口复位3) GPIO 端口模式设置4) 串口参数初始化5) 开启中断并且初始化 NVIC（如果需要开启中断才需要这个步骤）6) 使能串口7) 编写中断处理函数中断服务函数需要说一下怎么写：STM32的发送和接收">
 
 
 
@@ -115,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="http://trees.tech/2019/08/07/指针/">
+  <link rel="canonical" href="http://trees.tech/2019/09/22/USART通信/">
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>指针和指针数组 | together之博客</title>
+  <title>USART通信 | together之博客</title>
   
 
 
@@ -355,7 +355,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://trees.tech/2019/08/07/指针/">
+    <link itemprop="mainEntityOfPage" href="http://trees.tech/2019/09/22/USART通信/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="黄震航">
@@ -372,7 +372,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">指针和指针数组
+          <h1 class="post-title" itemprop="name headline">USART通信
 
               
             
@@ -398,7 +398,7 @@
                 
               
 
-              <time title="创建时间：2019-08-07 20:40:51" itemprop="dateCreated datePublished" datetime="2019-08-07T20:40:51+08:00">2019-08-07</time>
+              <time title="创建时间：2019-09-22 20:40:51" itemprop="dateCreated datePublished" datetime="2019-09-22T20:40:51+08:00">2019-09-22</time>
             
 
             
@@ -415,7 +415,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-18 02:37:56" itemprop="dateModified" datetime="2019-08-18T02:37:56+08:00">2019-08-18</time>
+                <time title="修改时间：2019-09-23 15:47:50" itemprop="dateModified" datetime="2019-09-23T15:47:50+08:00">2019-09-23</time>
               
             
           </span>
@@ -432,7 +432,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/stm32/" itemprop="url" rel="index"><span itemprop="name">stm32</span></a></span>
 
                 
                 
@@ -467,11 +467,8 @@
       
 
       
-        <p>我们经常能看到这些题：<br>1.<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> *p1和<span class="keyword">int</span> * <span class="keyword">const</span> p2</span><br><span class="line">另外，注意一下 <span class="keyword">const</span> <span class="keyword">int</span> *p等同与 <span class="keyword">int</span> <span class="keyword">const</span> *p</span><br></pre></td></tr></table></figure></p>
-<p>那么他们的区别在哪呢？<br>const int 是一个常量指针，他的指向方向可以修改，但是值不可以<br>int 指针 const是一个指针常量，他的值可以修改，但是指向方向不可以<br>看看如下代码和分析<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a,b;</span><br><span class="line">	a=<span class="number">10</span>;</span><br><span class="line">	b=<span class="number">100</span>;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> *p=&amp;a;<span class="comment">//常量指针</span></span><br><span class="line">	p=&amp;b;<span class="comment">//正确</span></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"p为:"</span>&lt;&lt;*p&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="comment">// *p=100;//错误:指针指向的方向可以修改，但是指针的值不可以修改</span></span><br><span class="line">	<span class="keyword">int</span>  * <span class="keyword">const</span> q=&amp;a;</span><br><span class="line">	*q=<span class="number">1000</span>;<span class="comment">//正确</span></span><br><span class="line">	<span class="comment">//q=&amp;b;//错误：指针指向的方向不可以修改，但是指针的值可以修改</span></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"q的值为:"</span>&lt;&lt;*q&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="comment">//const int *p不可以修改指向也不可以修改值;</span></span><br><span class="line">system(<span class="string">"pause"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure></p>
-<p>第二类就是指针数组和数组指针。<br>优先级为：（) &gt;[] &gt;指针；<br>z指针数组：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">int</span> *<span class="selector-tag">p</span><span class="selector-attr">[3]</span> \\指针数组，存放指针的数组</span><br><span class="line"><span class="selector-tag">int</span> (*p)<span class="selector-attr">[3]</span> \\数组指针，指向数组的指针</span><br></pre></td></tr></table></figure></p>
-<p>来看看下面的代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> a[][<span class="number">5</span>]=&#123;&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;,&#123;<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>&#125;&#125;;</span><br><span class="line">	<span class="keyword">int</span> (*p)[<span class="number">5</span>]=a;<span class="comment">//等价于int (*p)[5]=&amp;a[0]输出地址值</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt;p&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt;p+<span class="number">1</span>&lt;&lt;<span class="built_in">endl</span>;<span class="comment">//</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;*p&lt;&lt;<span class="built_in">endl</span>;<span class="comment">//等价于指向首地址</span></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;*p+<span class="number">1</span>&lt;&lt;<span class="built_in">endl</span>;<span class="comment">//</span></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;*(p+<span class="number">1</span>)&lt;&lt;<span class="built_in">endl</span>;<span class="comment">//等价与p+1</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;**p&lt;&lt;<span class="built_in">endl</span>;<span class="comment">//输出值a[0][0]</span></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;**(p+<span class="number">1</span>)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;*(*p+<span class="number">1</span>)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>若首地址为0x001DF720<br>p+1是数组a的第二个元素也就是a[1]={6,7,8,9,10},首地址为a的起始+int<em>5(因为又5个元素),则输出结果0X001DF734；<br>而</em>p+1是先得到<em>p的值，再加1个int字节，即0X001DF724；<br>而**p是：将p=&amp;a[0]解引用得到</em>p=a[0],然后再解引用得到<strong>p=a[0][0],最后输出值1;<br>接下来是</strong>(p+1),p+1=&amp;a[1],再次解引用**(p+1)=a[1][0],输出6；<br>而最后一个，输出a[0][1],即2.</p>
+        <p>stm32串行通信有2中：分别是同步通信（SPI,I2C）异步通信（USART）；他们都是全双工通信。<br>串口设置的一般步骤可以总结为如下几个步骤：<br>1) 串口时钟使能，GPIO 时钟使能<br>2) 串口复位<br>3) GPIO 端口模式设置<br>4) 串口参数初始化<br>5) 开启中断并且初始化 NVIC（如果需要开启中断才需要这个步骤）<br>6) 使能串口<br>7) 编写中断处理函数<br>中断服务函数需要说一下怎么写：<br>STM32的发送和接收是通过USART_DR实现的，包含TDR和RDR。需要用void USART_SendData和<br>void USART_ReceiveData实现。<br>通过对USART_SR读取状态，用USART_GetITStatus()!=RESET判断.代码如下：<br><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">void <span class="built_in">USART1_IRQHandler</span>(void)                </span><br><span class="line">	&#123;</span><br><span class="line">	u8 Res;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">USART_GetITStatus</span>(USART1, USART_IT_RXNE) != RESET)  </span><br><span class="line">		&#123;</span><br><span class="line">		Res =<span class="built_in">USART_ReceiveData</span>(USART1);<span class="comment">//(USART1-&gt;DR);</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>((USART_RX_STA&amp;<span class="number">0x8000</span>)==<span class="number">0</span>)</span><br><span class="line">			&#123;</span><br><span class="line">			<span class="keyword">if</span>(USART_RX_STA&amp;<span class="number">0x4000</span>)<span class="comment">//½ÓÊÕµ½ÁË0x0d</span></span><br><span class="line">				&#123;</span><br><span class="line">				<span class="keyword">if</span>(Res!=<span class="number">0x0a</span>)<span class="built_in">USART_RX_STA</span>=<span class="number">0</span>;</span><br><span class="line">				<span class="keyword">else</span> USART_RX_STA|=<span class="number">0x8000</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				&#123;</span><br><span class="line">				<span class="keyword">if</span>(Res==<span class="number">0x0d</span>)<span class="built_in">USART_RX_STA</span>|=<span class="number">0x4000</span>;</span><br><span class="line">				<span class="keyword">else</span></span><br><span class="line">					&#123;</span><br><span class="line">					USART_RX_BUF[USART_RX_STA&amp;<span class="number">0X3FFF</span>]=Res ;</span><br><span class="line">					USART_RX_STA++;</span><br><span class="line">					<span class="keyword">if</span>(USART_RX_STA&gt;(USART_REC_LEN<span class="number">-1</span>))<span class="built_in">USART_RX_STA</span>=<span class="number">0</span>;	  </span><br><span class="line">					&#125;		 </span><br><span class="line">				&#125;</span><br><span class="line">			&#125;   		 </span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里再介绍一下printf的重定向<br>我们知道 C 语言中 printf 函数默认输出设备是显示器，如果要实现在串口 或者 LCD 上显示，必须重定义标准库函数里调用的与输出设备相关的函数。比如 使用 printf 输出到串口，需要将 fputc 里面的输出指向串口,这一过程就叫重定 向。那么如何让 STM32 使用 printf 函数呢？很简单，只需要将 fputc 里面的输 出指向 STM32 串口即可，fputc 函数有固定的格式，我们只需要在函数内操作 STM32 串口即可，代码如下<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fputc</span>(<span class="params"><span class="keyword">int</span> ch,FILE * p</span>) 函数默认的，</span></span><br><span class="line"><span class="function"></span>&#123; USART_SendData(USART1,(u8)ch);</span><br><span class="line">  <span class="keyword">while</span>(USART_GetFlagStatus(USART1,USART_FLAG_TXE)==RESET);</span><br><span class="line">	<span class="keyword">return</span> ch; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -498,7 +495,7 @@
         
         <div class="post-tags">
           
-            <a href="/tags/C/" rel="tag"># C++</a>
+            <a href="/tags/stm32/" rel="tag"># stm32</a>
           
         </div>
       
@@ -511,8 +508,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/04/stm32/" rel="next" title="stm32基础">
-                <i class="fa fa-chevron-left"></i> stm32基础
+              <a href="/2019/08/07/C/" rel="next" title="深拷贝和浅拷贝">
+                <i class="fa fa-chevron-left"></i> 深拷贝和浅拷贝
               </a>
             
           </div>
@@ -520,10 +517,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/08/07/C/" rel="prev" title="深拷贝和浅拷贝">
-                深拷贝和浅拷贝 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
