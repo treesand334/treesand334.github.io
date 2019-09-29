@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="4.7  多态4.7.1 多态的基本概念多态是C++面向对象三大特性之一 多态分为两类  静态多态: 函数重载 和 运算符重载属于静态多态，复用函数名 动态多态: 派生类和虚函数实现运行时多态  静态多态和动态多态区别：  静态多态的函数地址早绑定  -  编译阶段确定函数地址 动态多态的函数地址晚绑定  -  运行阶段确定函数地址  下面通过案例进行讲解多态 123456789101112131">
+<meta property="og:type" content="article">
+<meta property="og:title" content="together之博客">
+<meta property="og:url" content="http://trees.tech/2019/09/29/多态/index.html">
+<meta property="og:site_name" content="together之博客">
+<meta property="og:description" content="4.7  多态4.7.1 多态的基本概念多态是C++面向对象三大特性之一 多态分为两类  静态多态: 函数重载 和 运算符重载属于静态多态，复用函数名 动态多态: 派生类和虚函数实现运行时多态  静态多态和动态多态区别：  静态多态的函数地址早绑定  -  编译阶段确定函数地址 动态多态的函数地址晚绑定  -  运行阶段确定函数地址  下面通过案例进行讲解多态 123456789101112131">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://trees.tech/2019/09/29/多态/assets/1545985945198.png">
+<meta property="og:updated_time" content="2019-09-29T04:18:16.578Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="together之博客">
+<meta name="twitter:description" content="4.7  多态4.7.1 多态的基本概念多态是C++面向对象三大特性之一 多态分为两类  静态多态: 函数重载 和 运算符重载属于静态多态，复用函数名 动态多态: 派生类和虚函数实现运行时多态  静态多态和动态多态区别：  静态多态的函数地址早绑定  -  编译阶段确定函数地址 动态多态的函数地址晚绑定  -  运行阶段确定函数地址  下面通过案例进行讲解多态 123456789101112131">
+<meta name="twitter:image" content="http://trees.tech/2019/09/29/多态/assets/1545985945198.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://trees.tech/2019/09/29/多态/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | together之博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">together之博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">小白的成长之路</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">6</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">6</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">16</span></a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://trees.tech/2019/09/29/多态/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黄震航">
+      <meta itemprop="description" content="对得起别人对得起自己">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="together之博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-29 12:10:08 / 修改时间：12:18:16" itemprop="dateCreated datePublished" datetime="2019-09-29T12:10:08+08:00">2019-09-29</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="4-7-多态"><a href="#4-7-多态" class="headerlink" title="4.7  多态"></a>4.7  多态</h3><h4 id="4-7-1-多态的基本概念"><a href="#4-7-1-多态的基本概念" class="headerlink" title="4.7.1 多态的基本概念"></a>4.7.1 多态的基本概念</h4><p><strong>多态是C++面向对象三大特性之一</strong></p>
+<p>多态分为两类</p>
+<ul>
+<li>静态多态: 函数重载 和 运算符重载属于静态多态，复用函数名</li>
+<li>动态多态: 派生类和虚函数实现运行时多态</li>
+</ul>
+<p>静态多态和动态多态区别：</p>
+<ul>
+<li>静态多态的函数地址早绑定  -  编译阶段确定函数地址</li>
+<li>动态多态的函数地址晚绑定  -  运行阶段确定函数地址</li>
+</ul>
+<p>下面通过案例进行讲解多态</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//Speak函数就是虚函数</span></span><br><span class="line">	<span class="comment">//函数前面加上virtual关键字，变成虚函数，那么编译器在编译的时候就不能确定函数调用了。</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">speak</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"动物在说话"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span> :</span><span class="keyword">public</span> Animal</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">speak</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"小猫在说话"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span> :</span><span class="keyword">public</span> Animal</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">speak</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"小狗在说话"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//我们希望传入什么对象，那么就调用什么对象的函数</span></span><br><span class="line"><span class="comment">//如果函数地址在编译阶段就能确定，那么静态联编</span></span><br><span class="line"><span class="comment">//如果函数地址在运行阶段才能确定，就是动态联编</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DoSpeak</span><span class="params">(Animal &amp; animal)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	animal.speak();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//多态满足条件：</span></span><br><span class="line"><span class="comment">//1、有继承关系</span></span><br><span class="line"><span class="comment">//2、子类重写父类中的虚函数</span></span><br><span class="line"><span class="comment">//多态使用：</span></span><br><span class="line"><span class="comment">//父类指针或引用指向子类对象</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Cat cat;</span><br><span class="line">	DoSpeak(cat);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	Dog dog;</span><br><span class="line">	DoSpeak(dog);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	test01();</span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>总结：</p>
+<p>多态满足条件</p>
+<ul>
+<li>有继承关系</li>
+<li>子类重写父类中的虚函数</li>
+</ul>
+<p>多态使用条件</p>
+<ul>
+<li>父类指针或引用指向子类对象</li>
+</ul>
+<p>重写：函数返回值类型  函数名 参数列表 完全一致称为重写</p>
+<h4 id="4-7-2-多态案例一-计算器类"><a href="#4-7-2-多态案例一-计算器类" class="headerlink" title="4.7.2 多态案例一-计算器类"></a>4.7.2 多态案例一-计算器类</h4><p>案例描述：</p>
+<p>分别利用普通写法和多态技术，设计实现两个操作数进行运算的计算器类</p>
+<p>多态的优点：</p>
+<ul>
+<li>代码组织结构清晰</li>
+<li>可读性强</li>
+<li>利于前期和后期的扩展以及维护</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//普通实现</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Calculator</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getResult</span><span class="params">(<span class="built_in">string</span> oper)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (oper == <span class="string">"+"</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> m_Num1 + m_Num2;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (oper == <span class="string">"-"</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> m_Num1 - m_Num2;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (oper == <span class="string">"*"</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> m_Num1 * m_Num2;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//如果要提供新的运算，需要修改源码</span></span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> m_Num1;</span><br><span class="line">	<span class="keyword">int</span> m_Num2;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//普通实现测试</span></span><br><span class="line">	Calculator c;</span><br><span class="line">	c.m_Num1 = <span class="number">10</span>;</span><br><span class="line">	c.m_Num2 = <span class="number">10</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; c.m_Num1 &lt;&lt; <span class="string">" + "</span> &lt;&lt; c.m_Num2 &lt;&lt; <span class="string">" = "</span> &lt;&lt; c.getResult(<span class="string">"+"</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; c.m_Num1 &lt;&lt; <span class="string">" - "</span> &lt;&lt; c.m_Num2 &lt;&lt; <span class="string">" = "</span> &lt;&lt; c.getResult(<span class="string">"-"</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; c.m_Num1 &lt;&lt; <span class="string">" * "</span> &lt;&lt; c.m_Num2 &lt;&lt; <span class="string">" = "</span> &lt;&lt; c.getResult(<span class="string">"*"</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//多态实现</span></span><br><span class="line"><span class="comment">//抽象计算器类</span></span><br><span class="line"><span class="comment">//多态优点：代码组织结构清晰，可读性强，利于前期和后期的扩展以及维护</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AbstractCalculator</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">int</span> <span class="title">getResult</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> m_Num1;</span><br><span class="line">	<span class="keyword">int</span> m_Num2;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//加法计算器</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AddCalculator</span> :</span><span class="keyword">public</span> AbstractCalculator</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getResult</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> m_Num1 + m_Num2;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//减法计算器</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SubCalculator</span> :</span><span class="keyword">public</span> AbstractCalculator</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getResult</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> m_Num1 - m_Num2;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//乘法计算器</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MulCalculator</span> :</span><span class="keyword">public</span> AbstractCalculator</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getResult</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> m_Num1 * m_Num2;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test02</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//创建加法计算器</span></span><br><span class="line">	AbstractCalculator *abc = <span class="keyword">new</span> AddCalculator;</span><br><span class="line">	abc-&gt;m_Num1 = <span class="number">10</span>;</span><br><span class="line">	abc-&gt;m_Num2 = <span class="number">10</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; abc-&gt;m_Num1 &lt;&lt; <span class="string">" + "</span> &lt;&lt; abc-&gt;m_Num2 &lt;&lt; <span class="string">" = "</span> &lt;&lt; abc-&gt;getResult() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">delete</span> abc;  <span class="comment">//用完了记得销毁</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//创建减法计算器</span></span><br><span class="line">	abc = <span class="keyword">new</span> SubCalculator;</span><br><span class="line">	abc-&gt;m_Num1 = <span class="number">10</span>;</span><br><span class="line">	abc-&gt;m_Num2 = <span class="number">10</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; abc-&gt;m_Num1 &lt;&lt; <span class="string">" - "</span> &lt;&lt; abc-&gt;m_Num2 &lt;&lt; <span class="string">" = "</span> &lt;&lt; abc-&gt;getResult() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">delete</span> abc;  </span><br><span class="line"></span><br><span class="line">	<span class="comment">//创建乘法计算器</span></span><br><span class="line">	abc = <span class="keyword">new</span> MulCalculator;</span><br><span class="line">	abc-&gt;m_Num1 = <span class="number">10</span>;</span><br><span class="line">	abc-&gt;m_Num2 = <span class="number">10</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; abc-&gt;m_Num1 &lt;&lt; <span class="string">" * "</span> &lt;&lt; abc-&gt;m_Num2 &lt;&lt; <span class="string">" = "</span> &lt;&lt; abc-&gt;getResult() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">delete</span> abc;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//test01();</span></span><br><span class="line"></span><br><span class="line">	test02();</span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>总结：C++开发提倡利用多态设计程序架构，因为多态优点很多</p>
+</blockquote>
+<h4 id="4-7-3-纯虚函数和抽象类"><a href="#4-7-3-纯虚函数和抽象类" class="headerlink" title="4.7.3 纯虚函数和抽象类"></a>4.7.3 纯虚函数和抽象类</h4><p>在多态中，通常父类中虚函数的实现是毫无意义的，主要都是调用子类重写的内容</p>
+<p>因此可以将虚函数改为<strong>纯虚函数</strong></p>
+<p>纯虚函数语法：<code>virtual 返回值类型 函数名 （参数列表）= 0 ;</code></p>
+<p>当类中有了纯虚函数，这个类也称为==抽象类==</p>
+<p><strong>抽象类特点</strong>：</p>
+<ul>
+<li>无法实例化对象</li>
+<li>子类必须重写抽象类中的纯虚函数，否则也属于抽象类</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//纯虚函数</span></span><br><span class="line">	<span class="comment">//类中只要有一个纯虚函数就称为抽象类</span></span><br><span class="line">	<span class="comment">//抽象类无法实例化对象</span></span><br><span class="line">	<span class="comment">//子类必须重写父类中的纯虚函数，否则也属于抽象类</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Son</span> :</span><span class="keyword">public</span> Base</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"func调用"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Base * base = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="comment">//base = new Base; // 错误，抽象类无法实例化对象</span></span><br><span class="line">	base = <span class="keyword">new</span> Son;</span><br><span class="line">	base-&gt;func();</span><br><span class="line">	<span class="keyword">delete</span> base;<span class="comment">//记得销毁</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	test01();</span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-7-4-多态案例二-制作饮品"><a href="#4-7-4-多态案例二-制作饮品" class="headerlink" title="4.7.4 多态案例二-制作饮品"></a>4.7.4 多态案例二-制作饮品</h4><p><strong>案例描述：</strong></p>
+<p>制作饮品的大致流程为：煮水 -  冲泡 - 倒入杯中 - 加入辅料</p>
+<p>利用多态技术实现本案例，提供抽象制作饮品基类，提供子类制作咖啡和茶叶</p>
+<p><img src="assets/1545985945198.png" alt="1545985945198"></p>
+<p><strong>示例：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//抽象制作饮品</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AbstractDrinking</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//烧水</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Boil</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">	<span class="comment">//冲泡</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Brew</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">	<span class="comment">//倒入杯中</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">PourInCup</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">	<span class="comment">//加入辅料</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">PutSomething</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">	<span class="comment">//规定流程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">MakeDrink</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		Boil();</span><br><span class="line">		Brew();</span><br><span class="line">		PourInCup();</span><br><span class="line">		PutSomething();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//制作咖啡</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Coffee</span> :</span> <span class="keyword">public</span> AbstractDrinking &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//烧水</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Boil</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"煮农夫山泉!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//冲泡</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Brew</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"冲泡咖啡!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//倒入杯中</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">PourInCup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"将咖啡倒入杯中!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//加入辅料</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">PutSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"加入牛奶!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//制作茶水</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tea</span> :</span> <span class="keyword">public</span> AbstractDrinking &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//烧水</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Boil</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"煮自来水!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//冲泡</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Brew</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"冲泡茶叶!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//倒入杯中</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">PourInCup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"将茶水倒入杯中!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//加入辅料</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">PutSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"加入枸杞!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//业务函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DoWork</span><span class="params">(AbstractDrinking* drink)</span> </span>&#123;</span><br><span class="line">	drink-&gt;MakeDrink();</span><br><span class="line">	<span class="keyword">delete</span> drink;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test01</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	DoWork(<span class="keyword">new</span> Coffee);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"--------------"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	DoWork(<span class="keyword">new</span> Tea);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	test01();</span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-7-5-虚析构和纯虚析构"><a href="#4-7-5-虚析构和纯虚析构" class="headerlink" title="4.7.5 虚析构和纯虚析构"></a>4.7.5 虚析构和纯虚析构</h4><p>多态使用时，如果子类中有属性开辟到堆区，那么父类指针在释放时无法调用到子类的析构代码</p>
+<p>解决方式：将父类中的析构函数改为<strong>虚析构</strong>或者<strong>纯虚析构</strong></p>
+<p>虚析构和纯虚析构共性：</p>
+<ul>
+<li>可以解决父类指针释放子类对象</li>
+<li>都需要有具体的函数实现</li>
+</ul>
+<p>虚析构和纯虚析构区别：</p>
+<ul>
+<li>如果是纯虚析构，该类属于抽象类，无法实例化对象</li>
+</ul>
+<p>虚析构语法：</p>
+<p><code>virtual ~类名(){}</code></p>
+<p>纯虚析构语法：</p>
+<p><code>virtual ~类名() = 0;</code></p>
+<p><code>类名::~类名(){}</code></p>
+<p><strong>示例：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">	Animal()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"Animal 构造函数调用！"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Speak</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//析构函数加上virtual关键字，变成虚析构函数</span></span><br><span class="line">	<span class="comment">//virtual ~Animal()</span></span><br><span class="line">	<span class="comment">//&#123;</span></span><br><span class="line">	<span class="comment">//	cout &lt;&lt; "Animal虚析构函数调用！" &lt;&lt; endl;</span></span><br><span class="line">	<span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">virtual</span> ~Animal() = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Animal::~Animal()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Animal 纯虚析构函数调用！"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//和包含普通纯虚函数的类一样，包含了纯虚析构函数的类也是一个抽象类。不能够被实例化。</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span> :</span> <span class="keyword">public</span> Animal &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Cat(<span class="built_in">string</span> name)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"Cat构造函数调用！"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		m_Name = <span class="keyword">new</span> <span class="built_in">string</span>(name);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Speak</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; *m_Name &lt;&lt;  <span class="string">"小猫在说话!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	~Cat()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"Cat析构函数调用!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">this</span>-&gt;m_Name != <span class="literal">NULL</span>) &#123;</span><br><span class="line">			<span class="keyword">delete</span> m_Name;</span><br><span class="line">			m_Name = <span class="literal">NULL</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">string</span> *m_Name;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Animal *animal = <span class="keyword">new</span> Cat(<span class="string">"Tom"</span>);</span><br><span class="line">	animal-&gt;Speak();</span><br><span class="line"></span><br><span class="line">	<span class="comment">//通过父类指针去释放，会导致子类对象可能清理不干净，造成内存泄漏</span></span><br><span class="line">	<span class="comment">//怎么解决？给基类增加一个虚析构函数</span></span><br><span class="line">	<span class="comment">//虚析构函数就是用来解决通过父类指针释放子类对象</span></span><br><span class="line">	<span class="keyword">delete</span> animal;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	test01();</span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>总结：</p>
+<p>​    1. 虚析构或纯虚析构就是用来解决通过父类指针释放子类对象</p>
+<p>​    2. 如果子类中没有堆区数据，可以不写为虚析构或纯虚析构</p>
+<p>​    3. 拥有纯虚析构函数的类也属于抽象类</p>
+<h4 id="4-7-6-多态案例三-电脑组装"><a href="#4-7-6-多态案例三-电脑组装" class="headerlink" title="4.7.6 多态案例三-电脑组装"></a>4.7.6 多态案例三-电脑组装</h4><p><strong>案例描述：</strong></p>
+<p>电脑主要组成部件为 CPU（用于计算），显卡（用于显示），内存条（用于存储）</p>
+<p>将每个零件封装出抽象基类，并且提供不同的厂商生产不同的零件，例如Intel厂商和Lenovo厂商</p>
+<p>创建电脑类提供让电脑工作的函数，并且调用每个零件工作的接口</p>
+<p>测试时组装三台不同的电脑进行工作</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//抽象CPU类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CPU</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//抽象的计算函数</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">calculate</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//抽象显卡类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">VideoCard</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//抽象的显示函数</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//抽象内存条类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Memory</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//抽象的存储函数</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">storage</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//电脑类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Computer</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Computer(CPU * cpu, VideoCard * vc, Memory * mem)</span><br><span class="line">	&#123;</span><br><span class="line">		m_cpu = cpu;</span><br><span class="line">		m_vc = vc;</span><br><span class="line">		m_mem = mem;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//提供工作的函数</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">work</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="comment">//让零件工作起来，调用接口</span></span><br><span class="line">		m_cpu-&gt;calculate();</span><br><span class="line"></span><br><span class="line">		m_vc-&gt;display();</span><br><span class="line"></span><br><span class="line">		m_mem-&gt;storage();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//提供析构函数 释放3个电脑零件</span></span><br><span class="line">	~Computer()</span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//释放CPU零件</span></span><br><span class="line">		<span class="keyword">if</span> (m_cpu != <span class="literal">NULL</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">delete</span> m_cpu;</span><br><span class="line">			m_cpu = <span class="literal">NULL</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//释放显卡零件</span></span><br><span class="line">		<span class="keyword">if</span> (m_vc != <span class="literal">NULL</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">delete</span> m_vc;</span><br><span class="line">			m_vc = <span class="literal">NULL</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//释放内存条零件</span></span><br><span class="line">		<span class="keyword">if</span> (m_mem != <span class="literal">NULL</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">delete</span> m_mem;</span><br><span class="line">			m_mem = <span class="literal">NULL</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">	CPU * m_cpu; <span class="comment">//CPU的零件指针</span></span><br><span class="line">	VideoCard * m_vc; <span class="comment">//显卡零件指针</span></span><br><span class="line">	Memory * m_mem; <span class="comment">//内存条零件指针</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//具体厂商</span></span><br><span class="line"><span class="comment">//Intel厂商</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IntelCPU</span> :</span><span class="keyword">public</span> CPU</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">calculate</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"Intel的CPU开始计算了！"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IntelVideoCard</span> :</span><span class="keyword">public</span> VideoCard</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"Intel的显卡开始显示了！"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IntelMemory</span> :</span><span class="keyword">public</span> Memory</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">storage</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"Intel的内存条开始存储了！"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Lenovo厂商</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LenovoCPU</span> :</span><span class="keyword">public</span> CPU</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">calculate</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"Lenovo的CPU开始计算了！"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LenovoVideoCard</span> :</span><span class="keyword">public</span> VideoCard</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"Lenovo的显卡开始显示了！"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LenovoMemory</span> :</span><span class="keyword">public</span> Memory</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">storage</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"Lenovo的内存条开始存储了！"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//第一台电脑零件</span></span><br><span class="line">	CPU * intelCpu = <span class="keyword">new</span> IntelCPU;</span><br><span class="line">	VideoCard * intelCard = <span class="keyword">new</span> IntelVideoCard;</span><br><span class="line">	Memory * intelMem = <span class="keyword">new</span> IntelMemory;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"第一台电脑开始工作："</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="comment">//创建第一台电脑</span></span><br><span class="line">	Computer * computer1 = <span class="keyword">new</span> Computer(intelCpu, intelCard, intelMem);</span><br><span class="line">	computer1-&gt;work();</span><br><span class="line">	<span class="keyword">delete</span> computer1;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"-----------------------"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"第二台电脑开始工作："</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="comment">//第二台电脑组装</span></span><br><span class="line">	Computer * computer2 = <span class="keyword">new</span> Computer(<span class="keyword">new</span> LenovoCPU, <span class="keyword">new</span> LenovoVideoCard, <span class="keyword">new</span> LenovoMemory);;</span><br><span class="line">	computer2-&gt;work();</span><br><span class="line">	<span class="keyword">delete</span> computer2;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"-----------------------"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"第三台电脑开始工作："</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="comment">//第三台电脑组装</span></span><br><span class="line">	Computer * computer3 = <span class="keyword">new</span> Computer(<span class="keyword">new</span> LenovoCPU, <span class="keyword">new</span> IntelVideoCard, <span class="keyword">new</span> LenovoMemory);;</span><br><span class="line">	computer3-&gt;work();</span><br><span class="line">	<span class="keyword">delete</span> computer3;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="5-文件操作"><a href="#5-文件操作" class="headerlink" title="5 文件操作"></a>5 文件操作</h2><p>程序运行时产生的数据都属于临时数据，程序一旦运行结束都会被释放</p>
+<p>通过<strong>文件可以将数据持久化</strong></p>
+<p>C++中对文件操作需要包含头文件 ==&lt; fstream &gt;==</p>
+<p>文件类型分为两种：</p>
+<ol>
+<li><strong>文本文件</strong>     -  文件以文本的<strong>ASCII码</strong>形式存储在计算机中</li>
+<li><strong>二进制文件</strong> -  文件以文本的<strong>二进制</strong>形式存储在计算机中，用户一般不能直接读懂它们</li>
+</ol>
+<p>操作文件的三大类:</p>
+<ol>
+<li>ofstream：写操作</li>
+<li>ifstream： 读操作</li>
+<li>fstream ： 读写操作</li>
+</ol>
+<h3 id="5-1文本文件"><a href="#5-1文本文件" class="headerlink" title="5.1文本文件"></a>5.1文本文件</h3><h4 id="5-1-1写文件"><a href="#5-1-1写文件" class="headerlink" title="5.1.1写文件"></a>5.1.1写文件</h4><p>   写文件步骤如下：</p>
+<ol>
+<li><p>包含头文件   </p>
+<p>  #include &lt;fstream></p>
+</li>
+<li><p>创建流对象  </p>
+<p>ofstream ofs;</p>
+</li>
+<li><p>打开文件</p>
+<p>ofs.open(“文件路径”,打开方式);</p>
+</li>
+<li><p>写数据</p>
+<p>ofs &lt;&lt; “写入的数据”;</p>
+</li>
+<li><p>关闭文件</p>
+<p>ofs.close();</p>
+<p>​</p>
+</li>
+</ol>
+<p>文件打开方式：</p>
+<table>
+<thead>
+<tr>
+<th>打开方式</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ios::in</td>
+<td>为读文件而打开文件</td>
+</tr>
+<tr>
+<td>ios::out</td>
+<td>为写文件而打开文件</td>
+</tr>
+<tr>
+<td>ios::ate</td>
+<td>初始位置：文件尾</td>
+</tr>
+<tr>
+<td>ios::app</td>
+<td>追加方式写文件</td>
+</tr>
+<tr>
+<td>ios::trunc</td>
+<td>如果文件存在先删除，再创建</td>
+</tr>
+<tr>
+<td>ios::binary</td>
+<td>二进制方式</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意：</strong> 文件打开方式可以配合使用，利用|操作符</p>
+<p><strong>例如：</strong>用二进制方式写文件 <code>ios::binary |  ios:: out</code></p>
+<p><strong>示例：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ofstream ofs;</span><br><span class="line">	ofs.open(<span class="string">"test.txt"</span>, ios::out);</span><br><span class="line"></span><br><span class="line">	ofs &lt;&lt; <span class="string">"姓名：张三"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	ofs &lt;&lt; <span class="string">"性别：男"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	ofs &lt;&lt; <span class="string">"年龄：18"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	ofs.close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	test01();</span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>总结：</p>
+<ul>
+<li>文件操作必须包含头文件 fstream</li>
+<li>读文件可以利用 ofstream  ，或者fstream类</li>
+<li>打开文件时候需要指定操作文件的路径，以及打开方式</li>
+<li>利用&lt;&lt;可以向文件中写数据</li>
+<li>操作完毕，要关闭文件</li>
+</ul>
+<h4 id="5-1-2读文件"><a href="#5-1-2读文件" class="headerlink" title="5.1.2读文件"></a>5.1.2读文件</h4><p>读文件与写文件步骤相似，但是读取方式相对于比较多</p>
+<p>读文件步骤如下：</p>
+<ol>
+<li><p>包含头文件   </p>
+<p>  #include &lt;fstream></p>
+</li>
+<li><p>创建流对象  </p>
+<p>ifstream ifs;</p>
+</li>
+<li><p>打开文件并判断文件是否打开成功</p>
+<p>ifs.open(“文件路径”,打开方式);</p>
+</li>
+<li><p>读数据</p>
+<p>四种方式读取</p>
+</li>
+<li><p>关闭文件</p>
+<p>ifs.close();</p>
+</li>
+</ol>
+<p><strong>示例：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ifstream ifs;</span><br><span class="line">	ifs.open(<span class="string">"test.txt"</span>, ios::in);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!ifs.is_open())</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"文件打开失败"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//第一种方式</span></span><br><span class="line">	<span class="comment">//char buf[1024] = &#123; 0 &#125;;</span></span><br><span class="line">	<span class="comment">//while (ifs &gt;&gt; buf)</span></span><br><span class="line">	<span class="comment">//&#123;</span></span><br><span class="line">	<span class="comment">//	cout &lt;&lt; buf &lt;&lt; endl;</span></span><br><span class="line">	<span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//第二种</span></span><br><span class="line">	<span class="comment">//char buf[1024] = &#123; 0 &#125;;</span></span><br><span class="line">	<span class="comment">//while (ifs.getline(buf,sizeof(buf)))</span></span><br><span class="line">	<span class="comment">//&#123;</span></span><br><span class="line">	<span class="comment">//	cout &lt;&lt; buf &lt;&lt; endl;</span></span><br><span class="line">	<span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//第三种</span></span><br><span class="line">	<span class="comment">//string buf;</span></span><br><span class="line">	<span class="comment">//while (getline(ifs, buf))</span></span><br><span class="line">	<span class="comment">//&#123;</span></span><br><span class="line">	<span class="comment">//	cout &lt;&lt; buf &lt;&lt; endl;</span></span><br><span class="line">	<span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">	<span class="keyword">while</span> ((c = ifs.get()) != EOF)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; c;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	ifs.close();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	test01();</span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>总结：</p>
+<ul>
+<li>读文件可以利用 ifstream  ，或者fstream类</li>
+<li>利用is_open函数可以判断文件是否打开成功</li>
+<li>close 关闭文件</li>
+</ul>
+<h3 id="5-2-二进制文件"><a href="#5-2-二进制文件" class="headerlink" title="5.2 二进制文件"></a>5.2 二进制文件</h3><p>以二进制的方式对文件进行读写操作</p>
+<p>打开方式要指定为 ==ios::binary==</p>
+<h4 id="5-2-1-写文件"><a href="#5-2-1-写文件" class="headerlink" title="5.2.1 写文件"></a>5.2.1 写文件</h4><p>二进制方式写文件主要利用流对象调用成员函数write</p>
+<p>函数原型 ：<code>ostream&amp; write(const char * buffer,int len);</code></p>
+<p>参数解释：字符指针buffer指向内存中一段存储空间。len是读写的字节数</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">char</span> m_Name[<span class="number">64</span>];</span><br><span class="line">	<span class="keyword">int</span> m_Age;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//二进制文件  写文件</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//1、包含头文件</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//2、创建输出流对象</span></span><br><span class="line">	<span class="function">ofstream <span class="title">ofs</span><span class="params">(<span class="string">"person.txt"</span>, ios::out | ios::binary)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//3、打开文件</span></span><br><span class="line">	<span class="comment">//ofs.open("person.txt", ios::out | ios::binary);</span></span><br><span class="line"></span><br><span class="line">	Person p = &#123;<span class="string">"张三"</span>  , <span class="number">18</span>&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//4、写文件</span></span><br><span class="line">	ofs.write((<span class="keyword">const</span> <span class="keyword">char</span> *)&amp;p, <span class="keyword">sizeof</span>(p));</span><br><span class="line"></span><br><span class="line">	<span class="comment">//5、关闭文件</span></span><br><span class="line">	ofs.close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	test01();</span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>总结：</p>
+<ul>
+<li>文件输出流对象 可以通过write函数，以二进制方式写数据</li>
+</ul>
+<h4 id="5-2-2-读文件"><a href="#5-2-2-读文件" class="headerlink" title="5.2.2 读文件"></a>5.2.2 读文件</h4><p>二进制方式读文件主要利用流对象调用成员函数read</p>
+<p>函数原型：<code>istream&amp; read(char *buffer,int len);</code></p>
+<p>参数解释：字符指针buffer指向内存中一段存储空间。len是读写的字节数</p>
+<p>示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">char</span> m_Name[<span class="number">64</span>];</span><br><span class="line">	<span class="keyword">int</span> m_Age;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">ifstream <span class="title">ifs</span><span class="params">(<span class="string">"person.txt"</span>, ios::in | ios::binary)</span></span>;</span><br><span class="line">	<span class="keyword">if</span> (!ifs.is_open())</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"文件打开失败"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Person p;</span><br><span class="line">	ifs.read((<span class="keyword">char</span> *)&amp;p, <span class="keyword">sizeof</span>(p));</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"姓名： "</span> &lt;&lt; p.m_Name &lt;&lt; <span class="string">" 年龄： "</span> &lt;&lt; p.m_Age &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	test01();</span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>文件输入流对象 可以通过read函数，以二进制方式读数据</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/29/C-核心编程/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/29/继承/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">黄震航</p>
+              <div class="site-description motion-element" itemprop="description">对得起别人对得起自己</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-7-多态"><span class="nav-number">1.</span> <span class="nav-text">4.7  多态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-7-1-多态的基本概念"><span class="nav-number">1.1.</span> <span class="nav-text">4.7.1 多态的基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-7-2-多态案例一-计算器类"><span class="nav-number">1.2.</span> <span class="nav-text">4.7.2 多态案例一-计算器类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-7-3-纯虚函数和抽象类"><span class="nav-number">1.3.</span> <span class="nav-text">4.7.3 纯虚函数和抽象类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-7-4-多态案例二-制作饮品"><span class="nav-number">1.4.</span> <span class="nav-text">4.7.4 多态案例二-制作饮品</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-7-5-虚析构和纯虚析构"><span class="nav-number">1.5.</span> <span class="nav-text">4.7.5 虚析构和纯虚析构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-7-6-多态案例三-电脑组装"><span class="nav-number">1.6.</span> <span class="nav-text">4.7.6 多态案例三-电脑组装</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#5-文件操作"><span class="nav-number"></span> <span class="nav-text">5 文件操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1文本文件"><span class="nav-number">1.</span> <span class="nav-text">5.1文本文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-1写文件"><span class="nav-number">1.1.</span> <span class="nav-text">5.1.1写文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-2读文件"><span class="nav-number">1.2.</span> <span class="nav-text">5.1.2读文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-二进制文件"><span class="nav-number">2.</span> <span class="nav-text">5.2 二进制文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-1-写文件"><span class="nav-number">2.1.</span> <span class="nav-text">5.2.1 写文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-读文件"><span class="nav-number">2.2.</span> <span class="nav-text">5.2.2 读文件</span></a></li></ol></li></ol></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黄震航</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
