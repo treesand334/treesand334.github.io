@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="一、浏览器内核浏览器内核可以分为：渲染引擎和JS引擎渲染引擎：负责获取网页内容、整理讯息，以及计算网页的显示方式，然后输出显示器或打印机。JS引擎；解析javascrint来实现网页动态二、Web标准结构：使内容更加清晰，更有逻辑性表现：用于修饰内容的样式行为：内容的交互及操作效果web标准的构成：web不是一个标准，而是由W3C和其他组织指定的一系列标准集合。主要包括结构、表现、行为结构标准：结">
-<meta name="keywords" content="html5基础">
+  <meta name="description" content="当我们调用拷贝构造函数时，系统会给我们进行的是浅拷贝；1m_high=p.m_high 浅拷贝带来的问题就是：堆区内存的重复释放而深拷贝可以重新分配内存资源；1m_high=new int(*p.m_high);//深拷贝 析构函数将堆区开辟的数据进行释放；代码如下：1234567891011~Person()&amp;#123;if(m_high!=Null)&amp;#123;delete m_high;m_">
+<meta name="keywords" content="C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="html5基础一">
-<meta property="og:url" content="http://trees.tech/2019/06/11/前端基础/index.html">
+<meta property="og:title" content="深拷贝和浅拷贝">
+<meta property="og:url" content="http://trees.tech/2019/08/07/深拷贝和浅拷贝/index.html">
 <meta property="og:site_name" content="together之博客">
-<meta property="og:description" content="一、浏览器内核浏览器内核可以分为：渲染引擎和JS引擎渲染引擎：负责获取网页内容、整理讯息，以及计算网页的显示方式，然后输出显示器或打印机。JS引擎；解析javascrint来实现网页动态二、Web标准结构：使内容更加清晰，更有逻辑性表现：用于修饰内容的样式行为：内容的交互及操作效果web标准的构成：web不是一个标准，而是由W3C和其他组织指定的一系列标准集合。主要包括结构、表现、行为结构标准：结">
+<meta property="og:description" content="当我们调用拷贝构造函数时，系统会给我们进行的是浅拷贝；1m_high=p.m_high 浅拷贝带来的问题就是：堆区内存的重复释放而深拷贝可以重新分配内存资源；1m_high=new int(*p.m_high);//深拷贝 析构函数将堆区开辟的数据进行释放；代码如下：1234567891011~Person()&amp;#123;if(m_high!=Null)&amp;#123;delete m_high;m_">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-29T05:44:55.419Z">
+<meta property="og:updated_time" content="2019-09-29T07:58:55.670Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="html5基础一">
-<meta name="twitter:description" content="一、浏览器内核浏览器内核可以分为：渲染引擎和JS引擎渲染引擎：负责获取网页内容、整理讯息，以及计算网页的显示方式，然后输出显示器或打印机。JS引擎；解析javascrint来实现网页动态二、Web标准结构：使内容更加清晰，更有逻辑性表现：用于修饰内容的样式行为：内容的交互及操作效果web标准的构成：web不是一个标准，而是由W3C和其他组织指定的一系列标准集合。主要包括结构、表现、行为结构标准：结">
+<meta name="twitter:title" content="深拷贝和浅拷贝">
+<meta name="twitter:description" content="当我们调用拷贝构造函数时，系统会给我们进行的是浅拷贝；1m_high=p.m_high 浅拷贝带来的问题就是：堆区内存的重复释放而深拷贝可以重新分配内存资源；1m_high=new int(*p.m_high);//深拷贝 析构函数将堆区开辟的数据进行释放；代码如下：1234567891011~Person()&amp;#123;if(m_high!=Null)&amp;#123;delete m_high;m_">
 
 
 
@@ -115,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="http://trees.tech/2019/06/11/前端基础/">
+  <link rel="canonical" href="http://trees.tech/2019/08/07/深拷贝和浅拷贝/">
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>html5基础一 | together之博客</title>
+  <title>深拷贝和浅拷贝 | together之博客</title>
   
 
 
@@ -355,7 +355,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://trees.tech/2019/06/11/前端基础/">
+    <link itemprop="mainEntityOfPage" href="http://trees.tech/2019/08/07/深拷贝和浅拷贝/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="黄震航">
@@ -372,7 +372,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">html5基础一
+          <h1 class="post-title" itemprop="name headline">深拷贝和浅拷贝
 
               
             
@@ -398,7 +398,7 @@
                 
               
 
-              <time title="创建时间：2019-06-11 20:40:51" itemprop="dateCreated datePublished" datetime="2019-06-11T20:40:51+08:00">2019-06-11</time>
+              <time title="创建时间：2019-08-07 20:40:51" itemprop="dateCreated datePublished" datetime="2019-08-07T20:40:51+08:00">2019-08-07</time>
             
 
             
@@ -415,7 +415,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-09-29 13:44:55" itemprop="dateModified" datetime="2019-09-29T13:44:55+08:00">2019-09-29</time>
+                <time title="修改时间：2019-09-29 15:58:55" itemprop="dateModified" datetime="2019-09-29T15:58:55+08:00">2019-09-29</time>
               
             
           </span>
@@ -432,7 +432,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a></span>
 
                 
                 
@@ -467,14 +467,11 @@
       
 
       
-        <p>一、浏览器内核<br>浏览器内核可以分为：渲染引擎和JS引擎<br>渲染引擎：负责获取网页内容、整理讯息，以及计算网页的显示方式，然后输出显示器或打印机。<br>JS引擎；解析javascrint来实现网页动态<br>二、Web标准<br>结构：使内容更加清晰，更有逻辑性<br>表现：用于修饰内容的样式<br>行为：内容的交互及操作效果<br>web标准的构成：<br>web不是一个标准，而是由W3C和其他组织指定的一系列标准集合。主要包括结构、表现、行为<br>结构标准：结构用于对网页元素进行整理和分类，主要包括XML和XTML两个部分<br>样式标准：表现用于设置网页元素的版式、颜色、大小等外观样式，主要指CSS<br>行为标准：行为是指网页模型的定义及交互编写，主要包括DOM和ECMAScript两个部分<br>理想状态的源码：.html .css .js<br>三、简单的标签及其应用<br><code>&lt;hr /&gt;</code>水平标签<br><code>&lt;p&gt;</code>段落标签  </p><br><code>&lt;br /&gt;</code>打断，换行<br><code>&lt;div&gt; &lt;/div&gt;
-&lt;span&gt;&lt;/span&gt;</code><br>div span 是没有语义的， 是我们网页布局的2个主要盒子<br>div就是分割，分区的意思。span是跨度的意思。<br><code>&lt;b&gt;&lt;/b&gt;&lt;strong&gt;&lt;/strong&gt;</code>文字以加粗方式显示<br><code>&lt;i&gt;&lt;/i&gt;和&lt;em&gt;&lt;/em&gt;</code>文字以斜体的方式显示<br><code>&lt;s&gt;&lt;/s&gt;和&lt;del&gt;&lt;/del&gt;</code>文字以加删除线的方式显示<br><code>&lt;u&gt;&lt;/u&gt;和&lt;ins&gt;&lt;/ins&gt;</code>文字以加下划线的方式显示.<br><code>&lt;a href=&quot;http://www.baidu.com&quot;&gt;百度&lt;/a&gt; &lt;br /&gt;</code>打开网页<br><code>&lt;img src=&quot;wo.jog&quot; alt=&quot;这是我的照片&quot;/&gt;</code>打开图片<br>注释快捷键ctrl+/<br>四、无序列表和有序列表<br>无序列表：<br> <code>&lt;ul&gt;
-    &lt;li&gt; &lt;/li&gt;
- &lt;/ul&gt;</code><br>有序列表：<br><code>&lt;ol&gt;
-    &lt;li&gt; &lt;/li&gt;
-&lt;/ol&gt;</code><br>自定义列表：<br><code>&lt;d1&gt;
-    &lt;dt&gt; &lt;/dt&gt;
-&lt;/d1&gt;</code><p></p>
+        <p>当我们调用拷贝构造函数时，系统会给我们进行的是浅拷贝；<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">m_high</span>=p.m_high</span><br></pre></td></tr></table></figure></p>
+<p>浅拷贝带来的问题就是：<br>堆区内存的重复释放<br>而深拷贝可以重新分配内存资源；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m_high=<span class="keyword">new</span> <span class="keyword">int</span>(*p.m_high);<span class="comment">//深拷贝</span></span><br></pre></td></tr></table></figure></p>
+<p>析构函数将堆区开辟的数据进行释放；代码如下：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">~Person()</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span>(m_high!=<span class="literal">Null</span>)</span><br><span class="line">&#123;</span><br><span class="line">delete m_high;</span><br><span class="line"><span class="attribute">m_high</span>=<span class="literal">Null</span>;</span><br><span class="line">&#125;</span><br><span class="line">cout&lt;&lt;<span class="string">"Person的析构函数"</span>&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>完整代码和说明如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">	 Person(<span class="built_in">string</span> name,<span class="keyword">int</span> high)</span><br><span class="line">	 &#123;</span><br><span class="line">		  <span class="built_in">cout</span>&lt;&lt;<span class="string">"有参函数"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	 m_name=name;</span><br><span class="line">	 m_high=<span class="keyword">new</span> <span class="keyword">int</span>(high);</span><br><span class="line"></span><br><span class="line">	 &#125;</span><br><span class="line">	 Person(<span class="keyword">const</span> Person &amp;p)</span><br><span class="line">	 &#123;</span><br><span class="line">	 m_name=p.m_name;</span><br><span class="line">	 <span class="comment">//m_high=p.m_high 浅拷贝</span></span><br><span class="line">	 m_high=<span class="keyword">new</span> <span class="keyword">int</span>(*p.m_high);<span class="comment">//深拷贝</span></span><br><span class="line">	 &#125;</span><br><span class="line">	 ~Person()<span class="comment">//析构函数可以释放堆区的数据</span></span><br><span class="line">    &#123;</span><br><span class="line">       <span class="keyword">if</span>(m_high!=<span class="literal">NULL</span>)<span class="comment">//析构函数将堆区开辟的数据进行释放</span></span><br><span class="line">          &#123;</span><br><span class="line">             <span class="keyword">delete</span> m_high;</span><br><span class="line">                m_high=<span class="literal">NULL</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;<span class="string">"Person的析构函数"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">	 <span class="built_in">string</span> m_name;</span><br><span class="line">	 <span class="keyword">int</span> *m_high;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="function">Person <span class="title">p1</span><span class="params">(<span class="string">"张三"</span>,<span class="number">160</span>)</span></span>;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;<span class="string">"p1的姓名为 ："</span>&lt;&lt;p1.m_name&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;<span class="string">"p1的身高为 ："</span>&lt;&lt;*p1.m_high&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"><span class="function">Person <span class="title">p2</span><span class="params">(p1)</span></span>;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;<span class="string">"p2的姓名为 ："</span>&lt;&lt;p2.m_name&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;<span class="string">"p2的身高为 ："</span>&lt;&lt;*p2.m_high&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	test();</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后，再说一下struct和class的区别：<br>struct默认访问权限是公开的；<br>而class是私有的。</p>
 
       
     </div>
@@ -501,7 +498,7 @@
         
         <div class="post-tags">
           
-            <a href="/tags/html5基础/" rel="tag"># html5基础</a>
+            <a href="/tags/C/" rel="tag"># C++</a>
           
         </div>
       
@@ -514,8 +511,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/11/前端基础三/" rel="next" title="前端基础之表单和html5新属性">
-                <i class="fa fa-chevron-left"></i> 前端基础之表单和html5新属性
+              <a href="/2019/08/07/指针/" rel="next" title="指针和指针数组">
+                <i class="fa fa-chevron-left"></i> 指针和指针数组
               </a>
             
           </div>
@@ -524,8 +521,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/19/前端二/" rel="prev" title="表格">
-                表格 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/08/27/C-核心编程/" rel="prev" title="C++入门">
+                C++入门 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
